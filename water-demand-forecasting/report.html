@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AquaForecast Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  </head>
+  <body class="dashboard-page report-page">
+    <header class="nav dashboard-nav">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">💧</span>
+        <span>AquaForecast</span>
+      </a>
+      <nav class="nav-links" aria-label="Reports navigation">
+        <a href="index.html">Overview</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="admin.html">Admin</a>
+        <a href="report.html" class="active">Reports</a>
+      </nav>
+      <a class="nav-cta" href="dashboard.html">Back to dashboard</a>
+    </header>
+
+    <main class="report-shell">
+      <section class="report-panel print-area" id="reportArea">
+        <div class="report-header">
+          <div>
+            <span class="mini-label">Monthly operations review</span>
+            <h1>Water demand forecast report</h1>
+          </div>
+          <button id="exportPdfBtn" class="btn primary" type="button">Export PDF</button>
+        </div>
+
+        <div class="report-grid dashboard-report-grid">
+          <article class="report-metric">
+            <span>Forecast coverage</span>
+            <strong id="reportCoverage">96.2%</strong>
+          </article>
+          <article class="report-metric">
+            <span>Water saved</span>
+            <strong id="reportSaved">14.6 MLD</strong>
+          </article>
+          <article class="report-metric">
+            <span>Leak reduction</span>
+            <strong id="reportLeak">11.4%</strong>
+          </article>
+          <article class="report-metric">
+            <span>Cost efficiency</span>
+            <strong id="reportCost">₹18.2L</strong>
+          </article>
+        </div>
+
+        <div class="report-table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>District</th>
+                <th>Demand</th>
+                <th>Efficiency</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="report.js"></script>
+  </body>
+</html>

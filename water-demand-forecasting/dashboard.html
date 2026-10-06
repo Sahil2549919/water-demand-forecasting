@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AquaForecast Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+  </head>
+  <body class="dashboard-page">
+    <header class="nav dashboard-nav">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">💧</span>
+        <span>AquaForecast</span>
+      </a>
+      <a class="nav-cta" href="admin.html">Admin access</a>
+    </header>
+
+    <div class="dashboard-layout">
+      <aside class="dashboard-sidebar">
+        <p class="sidebar-label">Workspace</p>
+        <nav class="sidebar-links" aria-label="Dashboard navigation">
+          <a href="index.html"><span aria-hidden="true">⌂</span> Overview</a>
+          <a href="dashboard.html" class="active" aria-current="page"><span aria-hidden="true">▦</span> Dashboard</a>
+          <a href="admin.html"><span aria-hidden="true">⚙</span> Admin</a>
+          <a href="report.html"><span aria-hidden="true">▤</span> Reports</a>
+        </nav>
+        <div class="sidebar-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          <div><strong>System online</strong><small>Monitoring active</small></div>
+        </div>
+      </aside>
+
+      <main class="dashboard-shell">
+      <section class="dashboard-hero">
+        <div>
+          <p class="eyebrow">Utility operations</p>
+          <h1>Real-time water demand dashboard</h1>
+        </div>
+        <button id="downloadPdfBtn" class="btn primary" type="button">Download PDF report</button>
+      </section>
+
+      <section class="kpi-grid" id="kpiGrid">
+        <article class="kpi-card accent">
+          <span>Network health</span>
+          <strong id="networkHealth">—</strong>
+          <small>Sensor uptime</small>
+        </article>
+        <article class="kpi-card">
+          <span>Active alerts</span>
+          <strong id="activeAlerts">—</strong>
+          <small>Issues in queue</small>
+        </article>
+        <article class="kpi-card">
+          <span>Quality score</span>
+          <strong id="qualityScore">—</strong>
+          <small>Safety index</small>
+        </article>
+        <article class="kpi-card">
+          <span>Reservoir status</span>
+          <strong id="reservoirStatus">—</strong>
+          <small>Storage level</small>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="panel map-panel-large">
+          <div class="panel-head">
+            <div>
+              <p class="kicker">City map</p>
+              <h2>District coverage</h2>
+            </div>
+            <label class="inline-control">
+              City
+              <select id="citySelect">
+                <option value="lucknow">Lucknow</option>
+                <option value="kanpur">Kanpur</option>
+                <option value="noida">Noida</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="map-layout">
+            <div class="map-visual" id="districtMap" role="application" aria-label="Interactive OpenStreetMap with water network district markers">
+              <p class="map-error hidden" id="mapError" role="status"></p>
+            </div>
+            <aside class="district-details" id="districtDetails">
+              <h3>Selected district</h3>
+              <strong id="districtName">North feeder</strong>
+              <div class="detail-row">
+                <span>Load</span>
+                <strong id="districtLoad">4.8 MLD</strong>
+              </div>
+              <div class="detail-row">
+                <span>Status</span>
+                <strong id="districtStatus">Stable</strong>
+              </div>
+              <div class="detail-row">
+                <span>Pressure</span>
+                <strong id="districtPressure">92 PSI</strong>
+              </div>
+            </aside>
+          </div>
+          <p class="map-disclaimer">
+            Basemap © OpenStreetMap contributors. The water-network markers are
+            approximate planning locations, not verified utility assets or service boundaries.
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="kicker">District list</p>
+              <h2>Active zones</h2>
+            </div>
+          </div>
+          <ul class="district-list" id="districtList"></ul>
+        </div>
+      </section>
+
+      <section class="panel report-summary">
+        <div class="panel-head">
+          <div>
+            <p class="kicker">Forecast summary</p>
+            <h2>Performance overview</h2>
+          </div>
+        </div>
+        <div class="report-grid dashboard-report-grid">
+          <article class="report-metric">
+            <span>Forecast coverage</span>
+            <strong id="reportCoverage">—</strong>
+          </article>
+          <article class="report-metric">
+            <span>Water saved</span>
+            <strong id="reportSaved">—</strong>
+          </article>
+          <article class="report-metric">
+            <span>Leak reduction</span>
+            <strong id="reportLeak">—</strong>
+          </article>
+          <article class="report-metric">
+            <span>Cost efficiency</span>
+            <strong id="reportCost">—</strong>
+          </article>
+        </div>
+      </section>
+      </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

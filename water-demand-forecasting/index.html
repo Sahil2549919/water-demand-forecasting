@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Machine Learning for Water Demand Forecasting</title>
+    <meta
+      name="description"
+      content="An intelligent forecasting system that analyzes historical water consumption patterns to predict future demand and support sustainable water resource management."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=2" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+  </head>
+  <body>
+    <div class="bg-glow" aria-hidden="true"></div>
+    <header class="nav site-nav">
+      <a class="brand" href="#home">
+        <span class="brand-mark">💧</span>
+        <span>AquaForecast</span>
+      </a>
+      <a class="nav-cta" href="dashboard.html">Open dashboard</a>
+    </header>
+
+    <div class="site-layout">
+      <aside class="site-sidebar">
+        <p class="sidebar-label">Explore</p>
+        <nav class="sidebar-links" aria-label="Primary">
+          <a href="#why"><span aria-hidden="true">◈</span> Why it matters</a>
+          <a href="#features"><span aria-hidden="true">✦</span> Features</a>
+          <a href="#solution"><span aria-hidden="true">⌁</span> Solution</a>
+          <a href="#how"><span aria-hidden="true">↗</span> How it works</a>
+          <a href="#forecast"><span aria-hidden="true">⌁</span> Live forecast</a>
+          <a href="dashboard.html"><span aria-hidden="true">▦</span> Dashboard</a>
+          <a href="admin.html"><span aria-hidden="true">⚙</span> Admin</a>
+          <a href="report.html"><span aria-hidden="true">▤</span> Reports</a>
+          <a href="#tech"><span aria-hidden="true">⌘</span> Technology</a>
+          <a href="#impact"><span aria-hidden="true">◎</span> Impact</a>
+        </nav>
+        <div class="sidebar-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          <div><strong>Water intelligence</strong><small>Plan with confidence</small></div>
+        </div>
+      </aside>
+
+      <div class="site-content">
+      <main>
+      <section id="home" class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">SDG 6 • Clean Water &amp; Sanitation</p>
+          <h1>
+            Machine Learning for<br />
+            <em>Water Demand Forecasting</em>
+          </h1>
+          <p class="lede">
+            An intelligent forecasting system that analyzes historical water
+            consumption patterns to predict future demand and support sustainable
+            water resource management.
+          </p>
+          <p class="tagline">Smarter Predictions. Sustainable Water Management.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#forecast">See live forecast</a>
+            <a class="btn ghost" href="#solution">Explore the system</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Water management illustration">
+          <div class="hero-scene" role="img" aria-label="Abstract water infrastructure illustration"></div>
+          <div class="floating-card">
+            <strong>24.6%</strong>
+            <span>Lower wastage potential</span>
+          </div>
+        </div>
+
+        <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,64 C240,120 480,0 720,40 C960,80 1200,20 1440,64 L1440,120 L0,120 Z"></path>
+        </svg>
+      </section>
+
+      <section id="why" class="section">
+        <div class="section-head">
+          <p class="kicker">01 — Problem</p>
+          <h2>Why Water Demand Forecasting Matters</h2>
+          <p>
+            Water is one of our most valuable resources, yet predicting future
+            demand remains a major challenge for cities and municipalities.
+          </p>
+        </div>
+        <div class="card-grid four">
+          <article class="card problem-card">
+            <div class="icon">📈</div>
+            <div class="stat-tag">+18–30%</div>
+            <h3>Changing Demand</h3>
+            <p>Seasonal weather shifts and heatwaves create fast, difficult-to-predict demand swings.</p>
+          </article>
+          <article class="card problem-card">
+            <div class="icon">🏙</div>
+            <div class="stat-tag">+2.4% / year</div>
+            <h3>Growing Population</h3>
+            <p>Urban expansion increases household and commercial water load beyond simple averages.</p>
+          </article>
+          <article class="card problem-card">
+            <div class="icon">⚠</div>
+            <div class="stat-tag">14–22% loss</div>
+            <h3>Inefficient Planning</h3>
+            <p>Old planning models overlook real usage spikes and leak-driven losses in distribution.</p>
+          </article>
+          <article class="card problem-card">
+            <div class="icon">💧</div>
+            <div class="stat-tag">Supply risk</div>
+            <h3>Resource Wastage</h3>
+            <p>Without reliable forecasting, cities overproduce, underprepare, and face service disruption.</p>
+          </article>
+        </div>
+        <p class="closing">
+          Accurate forecasting enables smarter planning, efficient resource
+          utilization, and sustainable water management.
+        </p>
+      </section>
+
+      <section id="features" class="section alt">
+        <div class="section-head">
+          <p class="kicker">02 — Features</p>
+          <h2>Built for Clear, Actionable Water Decisions</h2>
+          <p>
+            The platform turns raw demand data into practical insights that help
+            utilities, city planners, and communities plan smarter and act faster.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-illustration art-monitor" aria-hidden="true">
+              <svg viewBox="0 0 260 180" role="img" aria-label="Smart monitoring illustration">
+                <rect x="12" y="20" width="236" height="120" rx="18" fill="rgba(11,32,42,0.27)"/>
+                <path d="M35 118 L78 92 L107 103 L143 64 L186 81 L225 48" fill="none" stroke="#7fe7ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="78" cy="92" r="6" fill="#9ef6ff"/>
+                <circle cx="143" cy="64" r="6" fill="#9ef6ff"/>
+                <circle cx="225" cy="48" r="6" fill="#9ef6ff"/>
+                <rect x="28" y="140" width="70" height="8" rx="4" fill="rgba(255,255,255,0.25)"/>
+                <rect x="110" y="140" width="52" height="8" rx="4" fill="rgba(255,255,255,0.25)"/>
+                <rect x="174" y="140" width="48" height="8" rx="4" fill="rgba(255,255,255,0.25)"/>
+              </svg>
+            </div>
+            <div class="feature-copy">
+              <h3>Smart Monitoring</h3>
+              <p>Track daily, weekly, and seasonal consumption with clear visuals and trend-based alerts.</p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-illustration art-forecast" aria-hidden="true">
+              <svg viewBox="0 0 260 180" role="img" aria-label="Prediction illustration">
+                <path d="M18 135 C56 120, 74 82, 104 95 S164 145, 196 96 S234 60, 242 44" fill="none" stroke="#7fe7ff" stroke-width="5" stroke-linecap="round"/>
+                <path d="M18 142 L242 142" stroke="rgba(255,255,255,0.22)" stroke-width="3"/>
+                <circle cx="196" cy="96" r="11" fill="rgba(127,231,255,0.14)" stroke="#7fe7ff" stroke-width="3"/>
+                <path d="M196 70 L196 122 M170 96 L222 96" stroke="#7fe7ff" stroke-width="3" stroke-linecap="round"/>
+                <path d="M30 45 L70 45" stroke="rgba(255,255,255,0.4)" stroke-width="5" stroke-linecap="round"/>
+                <path d="M30 62 L92 62" stroke="rgba(255,255,255,0.25)" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="feature-copy">
+              <h3>Demand Prediction</h3>
+              <p>Forecast future water usage to prevent shortages, reduce waste, and improve supply planning.</p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-illustration art-sustainability" aria-hidden="true">
+              <svg viewBox="0 0 260 180" role="img" aria-label="Sustainable action illustration">
+                <path d="M128 30 C94 42, 83 78, 105 103 C121 124, 142 132, 160 118 C181 101, 177 66, 148 52 C138 47, 132 39, 128 30 Z" fill="rgba(127,231,255,0.2)" stroke="#8cf2d8" stroke-width="3"/>
+                <path d="M126 58 C116 86, 108 96, 88 114" fill="none" stroke="#8cf2d8" stroke-width="4" stroke-linecap="round"/>
+                <path d="M128 58 C148 86, 162 96, 183 105" fill="none" stroke="#8cf2d8" stroke-width="4" stroke-linecap="round"/>
+                <path d="M87 130 L168 130" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="79" cy="130" r="10" fill="rgba(255,255,255,0.18)"/>
+                <circle cx="177" cy="130" r="10" fill="rgba(255,255,255,0.18)"/>
+              </svg>
+            </div>
+            <div class="feature-copy">
+              <h3>Sustainable Action</h3>
+              <p>Give policymakers the evidence they need to support resilient, efficient water infrastructure.</p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-illustration art-city" aria-hidden="true">
+              <svg viewBox="0 0 260 180" role="img" aria-label="City comparison illustration">
+                <rect x="38" y="92" width="28" height="52" rx="6" fill="rgba(255,255,255,0.12)"/>
+                <rect x="74" y="78" width="30" height="66" rx="6" fill="rgba(255,255,255,0.18)"/>
+                <rect x="112" y="60" width="32" height="84" rx="6" fill="rgba(127,231,255,0.2)"/>
+                <rect x="150" y="86" width="30" height="58" rx="6" fill="rgba(255,255,255,0.12)"/>
+                <rect x="188" y="70" width="30" height="74" rx="6" fill="rgba(255,255,255,0.22)"/>
+                <path d="M30 142 H230" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M42 108 L58 108 M80 88 L98 88 M118 72 L138 72 M156 98 L174 98 M194 82 L212 82" stroke="#7fe7ff" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="feature-copy">
+              <h3>City Comparison</h3>
+              <p>Compare demand across urban zones and identify where pressure is increasing fastest.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="city-comparison" class="section">
+        <div class="section-head">
+          <p class="kicker">03 — City comparison</p>
+          <h2>Compare demand across major urban zones</h2>
+          <p>
+            Each region has a different consumption profile. Comparing cities helps utilities target the right response for each demand pattern.
+          </p>
+        </div>
+
+        <div class="comparison-panel">
+          <div class="comparison-controls">
+            <label for="cityComparison">Select city</label>
+            <select id="cityComparison">
+              <option value="lucknow">Lucknow</option>
+              <option value="kanpur">Kanpur</option>
+              <option value="noida">Noida</option>
+            </select>
+          </div>
+
+          <div class="comparison-grid">
+            <article class="comparison-card accent">
+              <span>Current demand</span>
+              <strong id="comparisonDemand">—</strong>
+            </article>
+            <article class="comparison-card">
+              <span>Projected growth</span>
+              <strong id="comparisonGrowth">—</strong>
+            </article>
+            <article class="comparison-card">
+              <span>Seasonal peak</span>
+              <strong id="comparisonPeak">—</strong>
+            </article>
+            <article class="comparison-card">
+              <span>Action priority</span>
+              <strong id="comparisonPriority">—</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="solution" class="section">
+        <div class="section-head">
+          <p class="kicker">04 — Solution</p>
+          <h2>Our Proposed Solution</h2>
+          <p>
+            An AI-powered forecasting system that transforms historical water
+            consumption data into actionable insights for smarter, sustainable
+            water management.
+          </p>
+        </div>
+        <ol class="steps">
+          <li><strong>01</strong> Historical water consumption data is collected</li>
+          <li><strong>02</strong> Data is cleaned, validated, and prepared for analysis</li>
+          <li><strong>03</strong> The AI Forecasting Engine learns consumption patterns</li>
+          <li><strong>04</strong> Future water demand predictions are generated</li>
+          <li><strong>05</strong> Authorities use predictions for better planning and distribution</li>
+        </ol>
+        <div class="card-grid four">
+          <article class="mini">
+            <h3>Predict Demand</h3>
+            <p>Forecast future water needs</p>
+          </article>
+          <article class="mini">
+            <h3>Analyze Trends</h3>
+            <p>Study historical consumption</p>
+          </article>
+          <article class="mini">
+            <h3>Support Planning</h3>
+            <p>Enable efficient resource use</p>
+          </article>
+          <article class="mini">
+            <h3>Drive Decisions</h3>
+            <p>Data-driven insights</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <div class="section-head">
+          <p class="kicker">05 — Intelligence</p>
+          <h2>How Our AI Forecasting System Works</h2>
+          <p>
+            Our system follows an intelligent, data-driven process — studying
+            historical patterns to generate reliable predictions for future water
+            demand.
+          </p>
+        </div>
+        <div class="flow">
+          <article>
+            <span>1</span>
+            <h3>Observe Historical Data</h3>
+            <p>The AI analyzes consumption records from previous months and years.</p>
+          </article>
+          <article>
+            <span>2</span>
+            <h3>Discover Hidden Patterns</h3>
+            <p>Identifies recurring trends and seasonal variations difficult to spot manually.</p>
+          </article>
+          <article>
+            <span>3</span>
+            <h3>Learn Demand Trends</h3>
+            <p>The system understands how water demand evolves over time.</p>
+          </article>
+          <article>
+            <span>4</span>
+            <h3>Predict Future Demand</h3>
+            <p>The AI estimates future water demand for upcoming months.</p>
+          </article>
+          <article>
+            <span>5</span>
+            <h3>Support Better Decisions</h3>
+            <p>Predictions help authorities optimize production, distribution, and reduce wastage.</p>
+          </article>
+        </div>
+        <aside class="insight">
+          <strong>Key Insight:</strong> The AI does not guess the future — it
+          learns from the past to make informed predictions.
+        </aside>
+      </section>
+
+      <section id="forecast" class="section forecast">
+        <div class="section-head">
+          <p class="kicker">Live demo</p>
+          <h2>Interactive Water Demand Forecast</h2>
+          <p>
+            A working time-series model with trend, yearly seasonality, and
+            holdout evaluation — the same workflow described in the project:
+            historical data → pattern learning → forecast → MAE / RMSE / MAPE.
+          </p>
+        </div>
+        <div class="demo-panel">
+          <form id="controls" class="controls">
+            <label>
+              City profile
+              <select id="city">
+                <option value="lucknow">Lucknow (urban mix)</option>
+                <option value="kanpur">Kanpur (industrial)</option>
+                <option value="noida">Noida (fast growth)</option>
+              </select>
+            </label>
+            <label>
+              Forecast horizon
+              <select id="horizon">
+                <option value="6">6 months</option>
+                <option value="12" selected>12 months</option>
+                <option value="18">18 months</option>
+                <option value="24">24 months</option>
+              </select>
+            </label>
+            <label>
+              History window
+              <select id="history">
+                <option value="36">3 years</option>
+                <option value="48" selected>4 years</option>
+                <option value="60">5 years</option>
+              </select>
+            </label>
+            <button type="submit" class="btn primary">Generate forecast</button>
+          </form>
+          <div class="metrics" id="metrics">
+            <div><span>MAE</span><strong id="mae">—</strong></div>
+            <div><span>RMSE</span><strong id="rmse">—</strong></div>
+            <div><span>MAPE</span><strong id="mape">—</strong></div>
+            <div><span>Next-month demand</span><strong id="next">—</strong></div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="forecastChart" aria-label="Historical and predicted water demand chart"></canvas>
+          </div>
+          <p class="chart-note">
+            Values are million litres per day (MLD). The holdout window is the
+            last 12 months of history; metrics compare predicted vs. actual on
+            that window before projecting the future.
+          </p>
+          <div class="graph-guide">
+            <h3>How to read this graph</h3>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <span>1</span>
+                <p><strong>Blue line:</strong> historical demand from previous months.</p>
+              </div>
+              <div class="guide-item">
+                <span>2</span>
+                <p><strong>Teal dashed line:</strong> the forecast for upcoming months.</p>
+              </div>
+              <div class="guide-item">
+                <span>3</span>
+                <p><strong>Trend:</strong> the model studies long-term growth or decline in demand.</p>
+              </div>
+              <div class="guide-item">
+                <span>4</span>
+                <p><strong>Seasonality:</strong> demand rises or falls depending on climate and usage patterns.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="calculator" class="section">
+        <div class="section-head">
+          <p class="kicker">05 — Quick tools</p>
+          <h2>Daily Water Planning Calculator</h2>
+          <p>
+            Estimate how much water a community may consume in a day and how much could be saved with better planning and leak prevention.
+          </p>
+        </div>
+        <div class="calculator-panel">
+          <form id="waterCalculator" class="calculator-form">
+            <label>
+              Population
+              <input id="population" type="number" min="100" step="100" value="250000" />
+            </label>
+            <label>
+              Water use per person (litres/day)
+              <input id="perPerson" type="number" min="50" step="10" value="150" />
+            </label>
+            <label>
+              Estimated savings (% from efficiency)
+              <input id="savings" type="number" min="0" max="50" step="1" value="12" />
+            </label>
+            <button type="submit" class="btn primary">Calculate</button>
+          </form>
+          <div class="calc-results">
+            <div>
+              <span>Total daily use</span>
+              <strong id="dailyUse">—</strong>
+            </div>
+            <div>
+              <span>Monthly use</span>
+              <strong id="monthlyUse">—</strong>
+            </div>
+            <div>
+              <span>Potential savings</span>
+              <strong id="savedUse">—</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="planner" class="section alt">
+        <div class="section-head">
+          <p class="kicker">06 — Real-time planner</p>
+          <h2>Build a Water Resilience Scenario</h2>
+          <p>
+            Simulate demand pressure for your city and identify the most effective
+            response before shortages become operational problems.
+          </p>
+        </div>
+
+        <div class="planner-panel">
+          <form id="resiliencePlanner" class="planner-form">
+            <label>
+              City
+              <select id="plannerCity">
+                <option value="lucknow">Lucknow</option>
+                <option value="kanpur">Kanpur</option>
+                <option value="noida">Noida</option>
+              </select>
+            </label>
+            <label>
+              Current supply (MLD)
+              <input id="plannerSupply" type="number" min="100" step="10" value="500" />
+            </label>
+            <label>
+              Demand lift (%)
+              <input id="plannerLift" type="number" min="0" max="60" step="1" value="18" />
+            </label>
+            <label>
+              Efficiency gain (%)
+              <input id="plannerEfficiency" type="number" min="0" max="40" step="1" value="12" />
+            </label>
+            <button type="submit" class="btn primary">Run scenario</button>
+          </form>
+
+          <div class="planner-results">
+            <article class="planner-card accent">
+              <span>Projected demand</span>
+              <strong id="projectedDemand">—</strong>
+            </article>
+            <article class="planner-card">
+              <span>Stress index</span>
+              <strong id="stressIndex">—</strong>
+            </article>
+            <article class="planner-card">
+              <span>Gap / surplus</span>
+              <strong id="gapOrSurplus">—</strong>
+            </article>
+            <article class="planner-card">
+              <span>Recommended action</span>
+              <strong id="actionLabel">—</strong>
+            </article>
+          </div>
+
+          <div class="planner-steps" id="plannerSteps" aria-live="polite">
+            <div class="planner-step">Increase pump scheduling during peak morning hours.</div>
+            <div class="planner-step">Prioritize leak detection in the highest-use zones.</div>
+            <div class="planner-step">Deploy temporary storage for peak demand windows.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="operations" class="section">
+        <div class="section-head">
+          <p class="kicker">06 — Operations</p>
+          <h2>Live Network Dashboard</h2>
+          <p>
+            Real utility operations need more than forecasting alone — they need
+            active monitoring, leak detection, and rapid response coordination.
+          </p>
+        </div>
+
+        <div class="operations-panel">
+          <div class="status-overview">
+            <article class="status-card primary">
+              <span>Network health</span>
+              <strong id="networkHealth">—</strong>
+              <small>Sensor uptime</small>
+            </article>
+            <article class="status-card">
+              <span>Active alerts</span>
+              <strong id="activeAlerts">—</strong>
+              <small>Issues in queue</small>
+            </article>
+            <article class="status-card">
+              <span>Quality score</span>
+              <strong id="qualityScore">—</strong>
+              <small>Water safety index</small>
+            </article>
+            <article class="status-card">
+              <span>Reservoir status</span>
+              <strong id="reservoirStatus">—</strong>
+              <small>Storage level</small>
+            </article>
+          </div>
+
+          <div class="ops-layout">
+            <div class="alert-board">
+              <div class="board-head">
+                <h3>Alert board</h3>
+                <select id="alertCitySelector">
+                  <option value="lucknow">Lucknow</option>
+                  <option value="kanpur">Kanpur</option>
+                  <option value="noida">Noida</option>
+                </select>
+              </div>
+              <div class="alert-list" id="alertList"></div>
+            </div>
+
+            <div class="zone-grid" id="zoneGrid" aria-live="polite">
+              <article class="zone-card">
+                <span>North zone</span>
+                <strong>92%</strong>
+                <small>Stable</small>
+              </article>
+              <article class="zone-card">
+                <span>Central zone</span>
+                <strong>84%</strong>
+                <small>Watch</small>
+              </article>
+              <article class="zone-card">
+                <span>Industrial belt</span>
+                <strong>77%</strong>
+                <small>Alert</small>
+              </article>
+              <article class="zone-card">
+                <span>South zone</span>
+                <strong>89%</strong>
+                <small>Stable</small>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="map" class="section alt">
+        <div class="section-head">
+          <p class="kicker">07 — Map view</p>
+          <h2>City Network Map</h2>
+          <p>
+            A simplified operational map helps teams understand how water flows
+            through the city and where service pressure demands attention.
+          </p>
+        </div>
+
+        <div class="map-panel">
+          <div class="map-visual overview-map-canvas" id="overviewMap" role="application" aria-label="Interactive OpenStreetMap with water network district markers">
+            <p class="map-error hidden" id="overviewMapError" role="status"></p>
+          </div>
+
+          <div class="map-insights">
+            <label class="inline-control">
+              City
+              <select id="overviewCitySelect">
+                <option value="lucknow">Lucknow</option>
+                <option value="kanpur">Kanpur</option>
+                <option value="noida">Noida</option>
+              </select>
+            </label>
+            <div class="map-stat">
+              <span>Demand</span>
+              <strong id="overviewDemand">—</strong>
+            </div>
+            <div class="map-stat">
+              <span>Peak season</span>
+              <strong id="overviewPeak">—</strong>
+            </div>
+            <div class="map-stat">
+              <span>Network health</span>
+              <strong id="overviewNetworkHealth">—</strong>
+            </div>
+            <ul class="district-list" id="overviewDistrictList"></ul>
+          </div>
+        </div>
+        <p class="map-disclaimer">
+          Basemap © OpenStreetMap contributors. The water-network markers are
+          approximate planning locations, not verified utility assets or service boundaries.
+        </p>
+      </section>
+
+      <section id="admin" class="section">
+        <div class="section-head">
+          <p class="kicker">08 — Admin dashboard</p>
+          <h2>Operations Control Panel</h2>
+          <p>
+            Secure operator access for real-time oversight, demand response, and
+            rapid action planning across the water network.
+          </p>
+        </div>
+
+        <div class="admin-shell">
+          <form id="adminLogin" class="login-panel">
+            <h3>Operator sign in</h3>
+            <label>
+              Username
+              <input id="adminUser" type="text" value="admin" />
+            </label>
+            <label>
+              Password
+              <input id="adminPass" type="password" value="water123" />
+            </label>
+            <button type="submit" class="btn primary">Enter dashboard</button>
+          </form>
+
+          <div id="adminDashboard" class="admin-dashboard hidden">
+            <div class="admin-header">
+              <div>
+                <span>Signed in</span>
+                <strong id="dashboardUserName">Operations Manager</strong>
+              </div>
+              <button id="logoutBtn" type="button" class="btn ghost small">Logout</button>
+            </div>
+            <div class="dashboard-grid">
+              <article class="dashboard-card accent">
+                <span>Active pumping</span>
+                <strong>18 stations</strong>
+              </article>
+              <article class="dashboard-card">
+                <span>Demand response</span>
+                <strong>82%</strong>
+              </article>
+              <article class="dashboard-card">
+                <span>Leak repair</span>
+                <strong>12 pending</strong>
+              </article>
+              <article class="dashboard-card">
+                <span>Storage reserve</span>
+                <strong>86% full</strong>
+              </article>
+            </div>
+            <div class="activity-feed">
+              <h4>Recent actions</h4>
+              <ul>
+                <li>Valve reset completed in Central loop.</li>
+                <li>Leak detection team dispatched to Industrial belt.</li>
+                <li>Night pumping schedule optimized for reduced energy use.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section alt">
+        <div class="section-head">
+          <p class="kicker">09 — Contact</p>
+          <h2>Contact the Water Planning Team</h2>
+          <p>
+            Need help with planning, deployment, or a system demo? Send a message
+            and the team will connect with your utility team quickly.
+          </p>
+        </div>
+
+        <div class="contact-panel">
+          <form id="contactForm" class="contact-form">
+            <label>
+              Name
+              <input type="text" id="contactName" placeholder="Your name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" id="contactEmail" placeholder="you@city.gov" required />
+            </label>
+            <label>
+              City / organization
+              <input type="text" id="contactCity" placeholder="Lucknow Municipal Corporation" />
+            </label>
+            <label class="full-width">
+              Message
+              <textarea id="contactMessage" rows="5" placeholder="Tell us about your planning goals or operation challenge" required></textarea>
+            </label>
+            <button type="submit" class="btn primary">Send inquiry</button>
+          </form>
+          <p id="contactMessageStatus" class="form-message" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="reports" class="section">
+        <div class="section-head">
+          <p class="kicker">10 — Reporting</p>
+          <h2>Export-Ready Operations Summary</h2>
+          <p>
+            Turn system insights into a board-ready report with a clean, print-friendly
+            layout suitable for PDF export and stakeholder review.
+          </p>
+        </div>
+
+        <div class="report-panel">
+          <div class="report-header">
+            <div>
+              <span class="mini-label">Monthly procurement review</span>
+              <h3>Water Operations Report</h3>
+            </div>
+            <button id="exportReportBtn" class="btn ghost" type="button">Export PDF</button>
+          </div>
+
+          <div class="report-grid">
+            <article class="report-metric">
+              <span>Forecast coverage</span>
+              <strong>96.2%</strong>
+            </article>
+            <article class="report-metric">
+              <span>Water saved</span>
+              <strong>14.6 MLD</strong>
+            </article>
+            <article class="report-metric">
+              <span>Leak reduction</span>
+              <strong>11.4%</strong>
+            </article>
+            <article class="report-metric">
+              <span>Cost efficiency</span>
+              <strong>₹18.2L</strong>
+            </article>
+          </div>
+
+          <div class="report-table-wrap">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th>Zone</th>
+                  <th>Demand</th>
+                  <th>Efficiency</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>North</td>
+                  <td>4.8 MLD</td>
+                  <td>94%</td>
+                  <td>Stable</td>
+                </tr>
+                <tr>
+                  <td>Central</td>
+                  <td>6.1 MLD</td>
+                  <td>89%</td>
+                  <td>Watch</td>
+                </tr>
+                <tr>
+                  <td>Industrial</td>
+                  <td>8.4 MLD</td>
+                  <td>81%</td>
+                  <td>Alert</td>
+                </tr>
+                <tr>
+                  <td>South</td>
+                  <td>5.6 MLD</td>
+                  <td>92%</td>
+                  <td>Stable</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="tech" class="section alt">
+        <div class="section-head">
+          <p class="kicker">11 — Build</p>
+          <h2>Technology &amp; Methodology</h2>
+        </div>
+        <div class="split">
+          <div>
+            <h3 class="sub">Technology Stack</h3>
+            <ul class="stack">
+              <li>
+                <strong>Python</strong>
+                Data processing, machine learning, and forecasting.
+              </li>
+              <li>
+                <strong>Pandas &amp; NumPy</strong>
+                Organizing, cleaning, and analyzing historical water data.
+              </li>
+              <li>
+                <strong>Facebook Prophet</strong>
+                ML model for time-series forecasting and trend prediction.
+              </li>
+              <li>
+                <strong>Optuna</strong>
+                Automated hyperparameter optimization for peak accuracy.
+              </li>
+              <li>
+                <strong>Matplotlib</strong>
+                Visualizing historical and predicted water demand.
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="sub">Project Methodology</h3>
+            <ol class="method">
+              <li>Historical Water Data</li>
+              <li>Data Preprocessing</li>
+              <li>Pattern Learning</li>
+              <li>Forecast Generation</li>
+              <li>Performance Evaluation</li>
+              <li>Prediction Results</li>
+            </ol>
+            <h3 class="sub">Performance Metrics</h3>
+            <ul class="metrics-list">
+              <li>MAE — Mean Absolute Error</li>
+              <li>RMSE — Root Mean Square Error</li>
+              <li>MAPE — Mean Absolute Percentage Error</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="impact" class="section">
+        <div class="section-head">
+          <p class="kicker">12 — Outcome</p>
+          <h2>Impact &amp; Future Vision</h2>
+        </div>
+        <div class="card-grid four">
+          <article class="card">
+            <h3>Smarter Water Planning</h3>
+            <p>Accurate forecasts enable efficient production and distribution planning.</p>
+          </article>
+          <article class="card">
+            <h3>Reduced Water Wastage</h3>
+            <p>Better predictions minimize overproduction and operational losses.</p>
+          </article>
+          <article class="card">
+            <h3>Improved Resource Management</h3>
+            <p>Efficient water utilization with fewer planning errors.</p>
+          </article>
+          <article class="card">
+            <h3>Data-Driven Decisions</h3>
+            <p>Reliable forecasting insights for informed authority decisions.</p>
+          </article>
+        </div>
+        <h3 class="sub center">Future Vision</h3>
+        <ul class="pills">
+          <li>Weather Data Integration</li>
+          <li>IoT Sensor Monitoring</li>
+          <li>Mobile Application</li>
+          <li>Interactive Dashboard</li>
+          <li>Smart City Integration</li>
+        </ul>
+      </section>
+
+      <section id="thanks" class="thanks">
+        <p class="eyebrow">Thank You</p>
+        <h2>Machine Learning for Water Demand Forecasting</h2>
+        <p class="lede">Predicting tomorrow’s water needs with artificial intelligence.</p>
+        <p class="tagline">“Smarter Predictions. Sustainable Water Management.”</p>
+        <div class="meta-row">
+          <div>
+            <span>Department</span>
+            Computer Science &amp; Engineering
+          </div>
+          <div>
+            <span>University</span>
+            Babu Banarasi Das University
+          </div>
+          <div>
+            <span>SDG Alignment</span>
+            SDG 6 — Clean Water &amp; Sanitation
+          </div>
+        </div>
+        <p class="team">Team: Anand · Gautami · Prachi · Sahil</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>AquaForecast · BBDU CSE project page · Built from the team presentation.</p>
+    </footer>
+      </div>
+    </div>
+    <script src="app.js?v=2"></script>
+    <script src="insights.js"></script>
+    <script src="site-map.js"></script>
+  </body>
+</html>

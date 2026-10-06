@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AquaForecast Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+  </head>
+  <body class="dashboard-page admin-page">
+    <header class="nav dashboard-nav">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">💧</span>
+        <span>AquaForecast</span>
+      </a>
+      <nav class="nav-links" aria-label="Admin navigation">
+        <a href="index.html">Overview</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="admin.html" class="active">Admin</a>
+        <a href="report.html">Reports</a>
+      </nav>
+      <a class="nav-cta" href="dashboard.html">Open dashboard</a>
+    </header>
+
+    <main class="admin-shell-page">
+      <section class="admin-login-panel">
+        <div class="login-block" id="loginView">
+          <p class="eyebrow">Secure access</p>
+          <h1>Utility operations login</h1>
+          <form id="loginForm" class="admin-form">
+            <label>
+              Username
+              <input id="usernameInput" type="text" autocomplete="username" required />
+            </label>
+            <label>
+              Password
+              <input id="passwordInput" type="password" autocomplete="current-password" required />
+            </label>
+            <button type="submit" class="btn primary">Sign in</button>
+          </form>
+          <p id="loginError" class="form-error" aria-live="polite"></p>
+        </div>
+
+        <div id="adminView" class="hidden admin-dashboard-panel">
+          <div class="admin-dashboard-header">
+            <div>
+              <p class="eyebrow">Signed in</p>
+              <h2 id="adminGreeting">Operations Manager</h2>
+            </div>
+            <button id="logoutBtn" class="btn ghost" type="button">Logout</button>
+          </div>
+
+          <div class="dashboard-grid admin-grid">
+            <article class="kpi-card accent">
+              <span>Active pumping</span>
+              <strong>18 stations</strong>
+              <small>Across 4 districts</small>
+            </article>
+            <article class="kpi-card">
+              <span>Response rate</span>
+              <strong>82%</strong>
+              <small>Within SLA window</small>
+            </article>
+            <article class="kpi-card">
+              <span>Leak repair</span>
+              <strong>12 pending</strong>
+              <small>2 critical cases</small>
+            </article>
+            <article class="kpi-card">
+              <span>Storage reserve</span>
+              <strong>86% full</strong>
+              <small>2.8 days reserve</small>
+            </article>
+          </div>
+
+          <div class="activity-feed admin-feed">
+            <h3>Recent operational actions</h3>
+            <ul>
+              <li>Valve reset completed in Central loop.</li>
+              <li>Pressure balancing started for the Industrial corridor.</li>
+              <li>Night pump schedule optimized to reduce energy use by 8%.</li>
+              <li>Demand alert acknowledged for South storage district.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
